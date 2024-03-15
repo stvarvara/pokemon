@@ -1,13 +1,12 @@
 ///Q1 la liste des Pokémons par type
 function getPokemonsByType(typeName){
-
 }
 ///Q2 la liste des Pokémons par attaque
 function getPokemonsByAttack(attackName) {
     
 }
 ///Q3 la liste des attaques par type
-function getPokemonsByAttack(attackName) {
+function getAttacksByType(typeName) {
     
 }
 ///Q4 a liste des Pokémons triés par nom dans l’ordre alphabétique
