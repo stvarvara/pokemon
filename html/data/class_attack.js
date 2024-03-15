@@ -49,43 +49,7 @@ class Attack {
         return `${this.name} - Type: ${this.type}, Power: ${this.power}, Duration: ${this.duration}, Energy Delta: ${this.energy_delta}, Stamina Loss Scaler: ${this.stamina_loss_scaler}, Critical Chance: ${this.critical_chance}`;
     }
 
-    static import_attacks() {
-        for (let entry of fast_moves) {
-            if (!Attack.all_attacks[entry.move_id]) {
-                Attack.all_attacks[entry.move_id] = new Attack(
-                    entry.move_id,
-                    entry.name,
-                    entry.type,
-                    entry.power,
-                    entry.duration,
-                    entry.energy_delta,
-                    entry.stamina_loss_scaler,
-                    null
-                );
-            }
-        }
-
-        for (let entry of charged_moves) {
-            if (!Attack.all_attacks[entry.move_id]) {
-                Attack.all_attacks[entry.move_id] = new Attack(
-                    entry.move_id,
-                    entry.name,
-                    entry.type,
-                    entry.power,
-                    entry.duration,
-                    entry.energy_delta,
-                    entry.stamina_loss_scaler,
-                    entry.critical_chance || null
-                );
-            }
-        }
-    }
-
-    static getAttackById(move_id) {
-        return Attack.all_attacks[move_id];
+    static getAttacks() {
+        return this.all_attacks;
     }
 }
-Attack.import_attacks();
-console.log("Attack Details:");
-console.log(Attack.all_attacks[200].toString());
-console.log(Attack.all_attacks[13].toString());

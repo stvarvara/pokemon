@@ -10,6 +10,8 @@ class Pokemon {
         this._base_defense = base_defense;
         this._base_stamina = base_stamina;
         this._types = types;
+        this._fast_moves = fast_moves;
+        this._charged_moves = charged_moves;
     }
 
     get pokemon_id() {
@@ -37,38 +39,71 @@ class Pokemon {
     }
 
     toString() {
-        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}`;
+        let attacks = this.getAttacks().map(attack => attack.toString()).join(", ");
+        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}, Attacks: ${attacks}`;
     }
 
     get types() {
         return this._types;
     }
 
-    static import_pokemon() {
-        for (let entry of pokemon) {
-            if (entry.form === "Normal") {
-                let types = Pokemon.get_types(entry.pokemon_name);
-    
-                types.forEach((type) => {
-                    if (!Type.all_types[type]) {
-                        Type.all_types[type] = new Type(type);
-                    }
-                });
-    
-                let pokemonInstance = new Pokemon(
-                    entry.pokemon_id,
-                    entry.pokemon_name,
-                    entry.form,
-                    entry.base_stamina,
-                    entry.base_defense,
-                    entry.base_attack,
-                    types
-                );
-    
-                Pokemon.all_pokemons[entry.pokemon_id] = pokemonInstance;
+    get attacks() {
+        let attacks = [];
+        for (let move_id of this._fast_moves.concat(this._charged_moves)) {
+            if (Attack.all_attacks[move_id]) {
+                attacks.push(Attack.all_attacks[move_id]);
             }
         }
+        return attacks;
+    } 
+
+    static import_pokemon() {
+    for (let entry of pokemon_moves) {
+        if (entry.form === "Normal") {
+            let types = Pokemon.get_types(entry.pokemon_name);
+            let fast_moves = entry.fast_moves.map(move => move.move_id);
+            let charged_moves = entry.charged_moves.map(move => move.move_id);
+
+            // Ajouter des attaques si elles n'existent pas déjà dans Attack.all_attacks
+            for (let move_id of fast_moves.concat(charged_moves)) {
+                if (!Attack.all_attacks[move_id]) {
+                    let moveData = [...fast_moves, ...charged_moves].find(move => move.move_id === move_id);
+                    Attack.all_attacks[move_id] = new Attack(
+                        moveData.move_id,
+                        moveData.name,
+                        moveData.type,
+                        moveData.power,
+                        moveData.duration,
+                        moveData.energy_delta,
+                        moveData.stamina_loss_scaler
+                    );
+                }
+            }
+
+            types.forEach((type) => {
+                if (!Type.all_types[type]) {
+                    Type.all_types[type] = new Type(type);
+                }
+            });
+
+            let pokemonInstance = new Pokemon(
+                entry.pokemon_id,
+                entry.pokemon_name,
+                entry.form,
+                entry.base_stamina,
+                entry.base_defense,
+                entry.base_attack,
+                types,
+                fast_moves,
+                charged_moves,
+                fast_moves,
+                charged_moves
+            );
+
+            Pokemon.all_pokemons[entry.pokemon_id] = pokemonInstance;
+        }
     }
+}
     
     static get_types(pokemonName) {
         let types = [];
@@ -93,3 +128,8 @@ class Pokemon {
 }
 
 Pokemon.import_pokemon();
+
+console.log(Pokemon.all_pokemons[1].toString());
+console.log(Pokemon.all_pokemons[2].toString());
+console.log(Type.all_types["Grass"].effectiveness);
+console.log(Type.all_types["Fire"].effectiveness); 
