@@ -1,5 +1,5 @@
 @import url("reset.css");
-@font-face {
+@font-face { /* le font de jeu */
     font-family: Pokemon;
     src: url(/html/css/PokemonSolid.ttf);
 }
