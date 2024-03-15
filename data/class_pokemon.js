@@ -79,11 +79,27 @@ class Pokemon {
         }
         return types.flat(); 
     }
+
+    getAttacks() {
+        let attacks = [];
+        this._fast_moves.forEach(move_id => {
+            attacks.push(Attack.getAttackById(move_id));
+        });
+        this._charged_moves.forEach(move_id => {
+            attacks.push(Attack.getAttackById(move_id));
+        });
+        return attacks;
+    }
 }
 
 Pokemon.import_pokemon();
+Attack.import_attacks();
 
 console.log(Pokemon.all_pokemons[1].toString());
 console.log(Pokemon.all_pokemons[2].toString());
 console.log(Type.all_types["Grass"].effectiveness);
 console.log(Type.all_types["Fire"].effectiveness); 
+
+console.log("Attack Details:");
+console.log(Attack.all_attacks[200].toString());
+console.log(Attack.all_attacks[13].toString());
