@@ -1,6 +1,6 @@
 // class Attack
 class Attack {
-    static all_attacks = {};
+    static all_attacks = {}; //  l’ensemble des attaques
 
     constructor(move_id, name, type, power, duration, energy_delta, stamina_loss_scaler, critical_chance) {
         this._move_id = move_id;

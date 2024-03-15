@@ -1,7 +1,7 @@
 // class Type pour connaître l’efficacité d’un type d’attaque contre
 // un type de défenseur
 class Type {
-    static all_types = {};
+    static all_types = {}; //  l’ensemble des types
 
     constructor(name) {
         this._name = name;
