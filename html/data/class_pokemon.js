@@ -108,7 +108,7 @@ class Pokemon {
     static get_types(pokemonName) {
         let types = [];
         for (let entry of pokemon_type) {
-            if (entry.form === "Normal" && entry.pokemon_name === pokemonName) {
+            if (entry.form === "Normal" && entry.pokemon_name === pokemonName) { //que les types des formes dont la valeur est Normal
                 types.push(entry.type);
             }
         }
