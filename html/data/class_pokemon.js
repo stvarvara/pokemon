@@ -1,6 +1,6 @@
 // class Pokemon
 class Pokemon {
-    static all_pokemons = {};
+    static all_pokemons = {}; //  l’ensemble des pokémons
 
     constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types) {
         this._pokemon_id = pokemon_id;
@@ -57,8 +57,8 @@ class Pokemon {
         return attacks;
     } 
 
-    static import_pokemon() {
-    for (let entry of pokemon_moves) {
+    static import_pokemon() { // lit la source de données et crée des objets Pokemon 
+    for (let entry of pokemon_moves) {  // liste des attaques
         if (entry.form === "Normal") {
             let types = Pokemon.get_types(entry.pokemon_name);
             let fast_moves = entry.fast_moves.map(move => move.move_id);
@@ -80,13 +80,13 @@ class Pokemon {
                 }
             }
 
-            types.forEach((type) => {
+            types.forEach((type) => { // liste des types
                 if (!Type.all_types[type]) {
                     Type.all_types[type] = new Type(type);
                 }
             });
 
-            let pokemonInstance = new Pokemon(
+            let pokemonInstance = new Pokemon( // création de Pokémon
                 entry.pokemon_id,
                 entry.pokemon_name,
                 entry.form,
@@ -100,22 +100,22 @@ class Pokemon {
                 charged_moves
             );
 
-            Pokemon.all_pokemons[entry.pokemon_id] = pokemonInstance;
+            Pokemon.all_pokemons[entry.pokemon_id] = pokemonInstance; // l'ajout de nouveau pokémon dans la liste, la clé est son ID
         }
     }
 }
     
-    static get_types(pokemonName) {
+    static get_types() { // retourne la liste des types pour le pokemon
         let types = [];
         for (let entry of pokemon_type) {
-            if (entry.form === "Normal" && entry.pokemon_name === pokemonName) { //que les types des formes dont la valeur est Normal
+            if (entry.form === "Normal" && entry.pokemon_name === this.name) { // on ne prends que les types des formes dont la valeur est Normal
                 types.push(entry.type);
             }
         }
         return types.flat(); 
     }
 
-    getAttacks() {
+    static getAttacks() { // retourne la liste des attaques pour le pokemon
         let attacks = [];
         this._fast_moves.forEach(move_id => {
             attacks.push(Attack.getAttackById(move_id));
@@ -127,9 +127,4 @@ class Pokemon {
     }
 }
 
-Pokemon.import_pokemon();
-
-console.log(Pokemon.all_pokemons[1].toString());
-console.log(Pokemon.all_pokemons[2].toString());
-console.log(Type.all_types["Grass"].effectiveness);
-console.log(Type.all_types["Fire"].effectiveness); 
+Pokemon.import_pokemon(); // import des données pour les pokémons
