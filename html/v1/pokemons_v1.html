@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="/html/css/style.css">
-                
+    <link rel="stylesheet" href="/html/css/style_v1.css">
+    <title>V1</title>
 </head>
 <body>
+    <div class="container">
+        <h1>Informations sur un pokémon</h1>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Génération</th>
+                        <th>Types</th>
+                        <th>Endurance</th>
+                        <th>Attaque</th>
+                        <th>Défense</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Bulbasaur</td>
+                        <td>1</td>
+                        <td>Grass, Poison</td>
+                        <td>128</td>
+                        <td>118</td>
+                        <td>111</td>
+                        <td><img src="/webp/thumbnails/001.webp" alt="Bulbasaur"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 <script src="/html/data/charged_moves.js"></script>
 <script src="/html/data/cp_multiplier.js"></script>
@@ -20,5 +50,4 @@
 <script src="/html/data/class_type.js"></script>
 <script src="/html/data/class_pokemon.js"></script>
 <script src="script_v1.js"></script>
-
 </html>
