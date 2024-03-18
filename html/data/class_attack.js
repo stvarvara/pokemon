@@ -1,55 +1,52 @@
-// class Attack
 class Attack {
-    static all_attacks = {}; //  l’ensemble des attaques
+    static all_attacks = {};
 
-    constructor(move_id, name, type, power, duration, energy_delta, stamina_loss_scaler, critical_chance) {
-        this._move_id = move_id;
+    constructor(name) {
+        const attack = charged_moves.find(move => move.name === name) || fast_moves.find(move => move.name === name);
+        
+        if (!attack) {
+            console.log("Undefined move: " + name);
+            return undefined;
+        }
+
+        const {
+            critical_chance = 0,
+            duration,
+            property,
+            energy_delta,
+            power,
+            stamina_loss_scaler,
+            type
+        } = attack;
+
         this._name = name;
-        this._type = type;
-        this._power = power;
-        this._duration = duration;
-        this._energy_delta = energy_delta;
-        this._stamina_loss_scaler = stamina_loss_scaler;
         this._critical_chance = critical_chance;
+        this._duration = duration;
+        this._property = property;
+        this._energy_delta = energy_delta;
+        this._power = power;
+        this._stamina_loss_scaler = stamina_loss_scaler;
+        this._type = type;
+        this._is_charged = !!charged_moves.find(move => move.name === name);
+
+        if (!Attack.all_attacks[name]) {
+            Attack.all_attacks[name] = this;
+        }
     }
 
-    get move_id() {
-        return this._move_id;
-    }
 
-    get name() {
+    toString() {
         return this._name;
     }
 
-    get type() {
-        return this._type;
-    }
-
-    get power() {
-        return this._power;
-    }
-
-    get duration() {
-        return this._duration;
-    }
-
-    get energy_delta() {
-        return this._energy_delta;
-    }
-
-    get stamina_loss_scaler() {
-        return this._stamina_loss_scaler;
-    }
-
-    get critical_chance() {
-        return this._critical_chance;
-    }
-
-    toString() {
-        return `${this.name} - Type: ${this.type}, Power: ${this.power}, Duration: ${this.duration}, Energy Delta: ${this.energy_delta}, Stamina Loss Scaler: ${this.stamina_loss_scaler}, Critical Chance: ${this.critical_chance}`;
-    }
-
-    static getAttacks() {
-        return this.all_attacks;
-    }
+    get name() { return this._name; }
+    get critical_chance() { return this._critical_chance; }
+    get duration() { return this._duration; }
+    get property() { return this._property; }
+    get energy_delta() { return this._energy_delta; }
+    get power() { return this._power; }
+    get stamina_loss_scaler() { return this._stamina_loss_scaler; }
+    get type() { return this._type; }
+    get is_charged() { return this._is_charged; }
+    
 }
