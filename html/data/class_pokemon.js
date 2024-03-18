@@ -1,8 +1,8 @@
 // class Pokemon
 class Pokemon {
-    static all_pokemons = {}; //  l’ensemble des pokémons
+    static all_pokemons = {};
 
-    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types) {
+    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types, moves) {
         this._pokemon_id = pokemon_id;
         this._pokemon_name = pokemon_name;
         this._form = form;
@@ -10,8 +10,7 @@ class Pokemon {
         this._base_defense = base_defense;
         this._base_stamina = base_stamina;
         this._types = types;
-        this._fast_moves = fast_moves;
-        this._charged_moves = charged_moves;
+        this._moves=moves;
     }
 
     get pokemon_id() {
@@ -24,6 +23,9 @@ class Pokemon {
 
     get form() {
         return this._form;
+    }
+    get moves(){
+        return this._moves;
     }
 
     get base_attack() {
@@ -39,92 +41,60 @@ class Pokemon {
     }
 
     toString() {
-        let attacks = this.getAttacks().map(attack => attack.toString()).join(", ");
-        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}, Attacks: ${attacks}`;
+        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}`;
     }
 
     get types() {
         return this._types;
     }
 
-    get attacks() {
-        let attacks = [];
-        for (let move_id of this._fast_moves.concat(this._charged_moves)) {
-            if (Attack.all_attacks[move_id]) {
-                attacks.push(Attack.all_attacks[move_id]);
+    static import_pokemon() {
+        for (const p of pokemon) {
+            if (p.form !== "Normal") {
+                continue; 
             }
-        }
-        return attacks;
-    } 
-
-    static import_pokemon() { // lit la source de données et crée des objets Pokemon 
-    for (let entry of pokemon_moves) {  // liste des attaques
-        if (entry.form === "Normal") {
-            let types = Pokemon.get_types(entry.pokemon_name);
-            let fast_moves = entry.fast_moves.map(move => move.move_id);
-            let charged_moves = entry.charged_moves.map(move => move.move_id);
-
-            // Ajouter des attaques si elles n'existent pas déjà dans Attack.all_attacks
-            for (let move_id of fast_moves.concat(charged_moves)) {
-                if (!Attack.all_attacks[move_id]) {
-                    let moveData = [...fast_moves, ...charged_moves].find(move => move.move_id === move_id);
-                    Attack.all_attacks[move_id] = new Attack(
-                        moveData.move_id,
-                        moveData.name,
-                        moveData.type,
-                        moveData.power,
-                        moveData.duration,
-                        moveData.energy_delta,
-                        moveData.stamina_loss_scaler
-                    );
-                }
-            }
-
-            types.forEach((type) => { // liste des types
-                if (!Type.all_types[type]) {
-                    Type.all_types[type] = new Type(type);
-                }
-            });
-
-            let pokemonInstance = new Pokemon( // création de Pokémon
-                entry.pokemon_id,
-                entry.pokemon_name,
-                entry.form,
-                entry.base_stamina,
-                entry.base_defense,
-                entry.base_attack,
-                types,
-                fast_moves,
-                charged_moves,
-                fast_moves,
-                charged_moves
-            );
-
-            Pokemon.all_pokemons[entry.pokemon_id] = pokemonInstance; // l'ajout de nouveau pokémon dans la liste, la clé est son ID
-        }
-    }
-}
+            
+            const { pokemon_name, pokemon_id, base_stamina, base_defense, base_attack } = p;
     
-    static get_types() { // retourne la liste des types pour le pokemon
-        let types = [];
-        for (let entry of pokemon_type) {
-            if (entry.form === "Normal" && entry.pokemon_name === this.name) { // on ne prends que les types des formes dont la valeur est Normal
-                types.push(entry.type);
+            const types = [];
+            for (const ptype of pokemon_type) {
+                if (ptype.pokemon_name === pokemon_name) {
+                    const typeName = ptype.type;
+                    if (!Type.all_types[typeName]) {
+                        Type.all_types[typeName] = new Type(typeName);
+                    }
+                    types.push(typeName);
+                }
             }
+    
+            const moves = [];
+            for (const pattack of pokemon_moves) {
+                if (pattack.pokemon_name === pokemon_name) {
+                    for (const move of [...pattack.charged_moves, ...pattack.fast_moves]) {
+                        if (!Attack.all_attacks[move]) {
+                            new Attack(move);
+                        }
+                        moves.push(move);
+                    }
+                }
+            }
+    
+            const newPokemon = new Pokemon(
+                pokemon_id, pokemon_name, p.form, base_stamina, base_defense, base_attack,
+                types, moves
+            );
+            Pokemon.all_pokemons[pokemon_id] = newPokemon;
         }
-        return types.flat(); 
+    }
+    
+    
+    getTypes() {
+        return this._types.map(type => Type.all_types[type]);
+    }
+    
+    getAttacks() {
+        const attackInstances = this._moves.map(move => Attack.all_attacks[move]);
+        return attackInstances;
     }
 
-    static getAttacks() { // retourne la liste des attaques pour le pokemon
-        let attacks = [];
-        this._fast_moves.forEach(move_id => {
-            attacks.push(Attack.getAttackById(move_id));
-        });
-        this._charged_moves.forEach(move_id => {
-            attacks.push(Attack.getAttackById(move_id));
-        });
-        return attacks;
-    }
-}
-
-Pokemon.import_pokemon(); // import des données pour les pokémons
+}    
