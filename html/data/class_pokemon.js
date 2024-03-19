@@ -64,11 +64,14 @@ class Pokemon {
             const types = [];
             for (const ptype of pokemon_type) {
                 if (ptype.pokemon_name === pokemon_name) {
-                    const typeName = ptype.type;
+                    if (ptype.form==="Normal") {
+                        const typeName = ptype.type;
                     if (!Type.all_types[typeName]) {
                         Type.all_types[typeName] = new Type(typeName);
                     }
                     types.push(typeName);
+                    }
+                    
                 }
             }
     
@@ -114,4 +117,3 @@ class Pokemon {
     }
 
 }    
-
