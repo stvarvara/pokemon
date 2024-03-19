@@ -2,7 +2,7 @@
 class Pokemon {
     static all_pokemons = {};
 
-    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types, moves) {
+    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types, moves, generation) {
         this._pokemon_id = pokemon_id;
         this._pokemon_name = pokemon_name;
         this._form = form;
@@ -11,6 +11,7 @@ class Pokemon {
         this._base_stamina = base_stamina;
         this._types = types;
         this._moves=moves;
+        this._generation=generation;
     }
 
     get pokemon_id() {
@@ -39,6 +40,9 @@ class Pokemon {
     get base_stamina() {
         return this._base_stamina;
     }
+    get generation() { 
+        return this._generation;
+    }
 
     toString() {
         return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}`;
@@ -55,6 +59,7 @@ class Pokemon {
             }
             
             const { pokemon_name, pokemon_id, base_stamina, base_defense, base_attack } = p;
+            const generation = Pokemon.import_generation(pokemon_name);
     
             const types = [];
             for (const ptype of pokemon_type) {
@@ -81,10 +86,21 @@ class Pokemon {
     
             const newPokemon = new Pokemon(
                 pokemon_id, pokemon_name, p.form, base_stamina, base_defense, base_attack,
-                types, moves
+                types, moves, generation
             );
             Pokemon.all_pokemons[pokemon_id] = newPokemon;
         }
+    }
+    static import_generation(name) {
+        for (const gen in generation) {
+            for (const pokemon of generation[gen]) {
+                if (pokemon.name === name) {
+                    const generationNumber = gen.match(/\d+/)[0];
+                    return generationNumber;
+                }
+            }
+        }
+        return "Inconnue";
     }
     
     
@@ -98,3 +114,4 @@ class Pokemon {
     }
 
 }    
+
