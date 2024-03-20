@@ -12,7 +12,7 @@ class Attack {
         const {
             critical_chance = 0,
             duration,
-            property,
+            move_id,
             energy_delta,
             power,
             stamina_loss_scaler,
@@ -22,7 +22,7 @@ class Attack {
         this._name = name;
         this._critical_chance = critical_chance;
         this._duration = duration;
-        this._property = property;
+        this._move_id = move_id;
         this._energy_delta = energy_delta;
         this._power = power;
         this._stamina_loss_scaler = stamina_loss_scaler;
@@ -42,7 +42,7 @@ class Attack {
     get name() { return this._name; }
     get critical_chance() { return this._critical_chance; }
     get duration() { return this._duration; }
-    get property() { return this._property; }
+    get move_id() { return this._move_id; }
     get energy_delta() { return this._energy_delta; }
     get power() { return this._power; }
     get stamina_loss_scaler() { return this._stamina_loss_scaler; }
