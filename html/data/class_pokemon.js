@@ -69,7 +69,7 @@ class Pokemon {
                     if (!Type.all_types[typeName]) {
                         Type.all_types[typeName] = new Type(typeName);
                     }
-                    types.push(typeName);
+                    types.push(...typeName);
                     }
                     
                 }
