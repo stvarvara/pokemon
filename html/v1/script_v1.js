@@ -1,3 +1,7 @@
+// La première version de l'affichage dynamique des Pokémons
+// Affichage d'un tableau de tous les Pokémons à partir de la source JSON
+
+
 Pokemon.import_pokemon();// Importe les données des Pokémon
 
 function padId(id) { //ajouter des zéros à gauche pour obtenir une chaîne de 3 caractères pour l'ID
