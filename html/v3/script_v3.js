@@ -1,3 +1,10 @@
+// La troisième version de l'affichage dynamique des Pokémons
+// Affichage d'un tableau des Pokémons par page de 25
+// Une zone de détails des Pokémons qui est masquée par défaut et s’affiche, en mode “popup”
+// sur un événement "clic sur la ligne d’un Pokémon
+
+//Un survol de la miniature du Pokémon affiche l’image du Pokémon en grande taille, en mode “popup”
+
 document.addEventListener("DOMContentLoaded", function() {
     const tableBody = document.getElementById("pokemonTableBody");
     const closeButton = document.getElementById("closeButton");
