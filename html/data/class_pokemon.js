@@ -3,7 +3,7 @@
 class Pokemon {
     static all_pokemons = {}; // Variable de classe contenant l'ensemble des Pokémon indexés par leur ID
 
-    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types, moves, generation) {
+    constructor(pokemon_id, pokemon_name, form, base_attack, base_defense, base_stamina, types, moves, generation, level=1.0) {
         this._pokemon_id = pokemon_id;
         this._pokemon_name = pokemon_name;
         this._form = form;
@@ -13,6 +13,7 @@ class Pokemon {
         this._types = types; // Liste des types du Pokémon
         this._moves=moves; // Liste des attaques du Pokémon
         this._generation=generation; // Génération à laquelle appartient le Pokémon
+        this._level=level; // Niveau du pokémon, 1 par défaut si non renseigné
     }
 
     // Getters pour les propriétés de Pokémon
@@ -23,12 +24,22 @@ class Pokemon {
     get base_attack() {return this._base_attack;}
     get base_defense() {return this._base_defense;}
     get base_stamina() {return this._base_stamina;}
-    get generation() { return this._generation;}
+    get generation() {return this._generation;}
+    get level() {return this._level;}
     get types() {return this._types;}
+    get stat_attack() {return this._base_attack * Pokemon.getCpMultiplier(this._level);}
+    get stat_defense() {return this._base_defense * Pokemon.getCpMultiplier(this._level);}
+    get stat_stamina() {return this._base_stamina * Pokemon.getCpMultiplier(this._level);}
+    
+
+    set level(level) {this._level = level;}
+    set base_attack(value) {this._base_attack = value;}
+    set base_defense(value) {this._base_defense = value;}
+    set base_stamina(value) {this._base_stamina = value;}
 
     // Méthode toString pour afficher le Pokémon
     toString() {
-        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}`;
+        return `${this.pokemon_name} (${this.form}) - ID: ${this.pokemon_id}, Level: ${this.level}, Attack: ${this.base_attack}, Defense: ${this.base_defense}, Stamina: ${this.base_stamina}`;
     }
 
     // Méthode statique pour importer les Pokémon à partir des données sources
@@ -78,6 +89,7 @@ class Pokemon {
                 pokemon_id, pokemon_name, p.form, base_stamina, base_defense, base_attack,
                 types, moves, generation
             );
+            
             // Ajout du Pokémon à la liste des Pokémon
             Pokemon.all_pokemons[pokemon_id] = newPokemon;
         }
@@ -105,7 +117,14 @@ class Pokemon {
         const attackInstances = this._moves.map(move => Attack.all_attacks[move]);
         return attackInstances;
     }
-
+    // Fonction qui renvoie le cp_multiplier pour le niveau correspondant donné en paramètre
+    static getCpMultiplier(level) {
+        let closestLevelObj = cp_multiplier.reduce((prev, curr) => {
+            return Math.abs(curr.level - level) < Math.abs(prev.level - level) ? curr : prev;
+        });
+        return closestLevelObj.multiplier;
+    }
+    
 }    
 
 Pokemon.import_pokemon();
