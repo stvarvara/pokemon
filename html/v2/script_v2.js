@@ -1,3 +1,6 @@
+// La deuxième version de l'affichage dynamique des Pokémons
+// Affichage d'un tableau des Pokémons par page de 25
+
 // Attente du chargement complet du document HTML 
 document.addEventListener("DOMContentLoaded", function() {
     const pokemonsPerPage = 25; // le nb des Pokémons par page
