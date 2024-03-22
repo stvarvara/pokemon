@@ -100,32 +100,63 @@ function hidePokemonImage() {
     }
 }
 
-function showPokemonDetails(pokemon) {
-    const pokemonAttacks = pokemon.moves;
-    const chargedAttacks = pokemonAttacks.filter(attackName => Attack.all_attacks[attackName].is_charged);
-    const fastAttacks = pokemonAttacks.filter(attackName => !Attack.all_attacks[attackName].is_charged);
+function showPokemonDetails(pokemon) { // afficher les details
+    const pokemonAttacks = pokemon.moves; // toutes les attaques
+    const chargedAttacks = pokemonAttacks.filter(attackName => Attack.all_attacks[attackName].is_charged);// les attaques chargées
+    const fastAttacks = pokemonAttacks.filter(attackName => !Attack.all_attacks[attackName].is_charged);// les attaques rapides
 
     let detailsHTML = `
         <p><b>№</b> ${pokemon.pokemon_id} ${pokemon.pokemon_name}</p>
         <p><b>Attaques Chargées :</b></p>
+        <table>
+        <tr>
+        <th>Attaque</th>
+        <th>Type</th>
+        <th>Delta d'énergie</th>
+        <th>Puissance</th>
+        <th>Durée</th>
+        </tr>
     `;
 
     chargedAttacks.forEach(attackName => {
         const attack = Attack.all_attacks[attackName];
         detailsHTML += `
-        <p><span class="att"><i>${attack.name} </i></span>  E: ${attack.energy_delta} P: ${attack.power} D: ${attack.duration}</p>`;
+        <tr>
+            <td class="att"><i>${attack.name} </i></td>
+            <td>${attack.type}</td>
+            <td>${attack.energy_delta}</td>
+            <td>${attack.power}</td>
+            <td>${attack.duration}</td>
+        </tr>`;
     });
 
     detailsHTML += `
+        </table>
         <p><b>Attaques Rapides :</b></p>
+        <table>
+        <tr>
+            <th>Attaque</th>
+            <th>Type</th>
+            <th>Delta d'énergie</th>
+            <th>Puissance</th>
+            <th>Durée</th>
+        </tr>
     `;
 
     fastAttacks.forEach(attackName => {
         const attack = Attack.all_attacks[attackName];
         detailsHTML += `
-        <p><span class="att"><i>${attack.name} </i></span>  E: ${attack.energy_delta} P: ${attack.power} D: ${attack.duration}</p>`;
+        <tr>
+            <td class="att"><i>${attack.name} </i></td>
+            <td>${attack.type}</td>
+            <td>${attack.energy_delta}</td>
+            <td>${attack.power}</td>
+            <td>${attack.duration}</td>
+        </tr>`;
     });
+    detailsHTML += `</table>`;
 
     detailsContent.innerHTML = detailsHTML;
     pokemonDetails.style.display = "block";
 }
+
