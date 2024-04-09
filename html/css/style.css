@@ -214,3 +214,14 @@ img {
     display: block;
     margin: 0 auto;
 }
+
+#filters {
+    display: flex;  
+    margin-bottom: 20px;
+    margin-top: 2%;
+    gap: 2%;
+}
+
+#filters label {
+    margin-right: 10px;
+}

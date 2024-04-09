@@ -125,4 +125,4 @@ class Pokemon {
     
 }    
 
-Pokemon.import_pokemon();
+Pokemon.import_pokemon();   
