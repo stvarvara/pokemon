@@ -1,6 +1,6 @@
 # Projet Pokémon
 ## Affichage du projet
-Pour afficher la version du projet souhaité, сollez le lien dans votre navigateur et modifiez les chiffres pour la version que vous souhaitez.
+Pour afficher la version du projet, сollez le lien dans votre navigateur et modifiez les chiffres pour la version que vous souhaitez.
 
 Exemple pour la version 4:
 `https://stvarvara.github.io/pokemon/html/v4/pokemons_v4.html`
