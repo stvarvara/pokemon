@@ -27,15 +27,13 @@ class Pokemon {
     get generation() {return this._generation;}
     get level() {return this._level;}
     get types() {return this._types;}
+
+    // Les stats_... sont les stats du pokémon à un niveau donné, gérées par la méthode getCpMultiplier
     get stat_attack() {return this._base_attack * Pokemon.getCpMultiplier(this._level);}
     get stat_defense() {return this._base_defense * Pokemon.getCpMultiplier(this._level);}
     get stat_stamina() {return this._base_stamina * Pokemon.getCpMultiplier(this._level);}
     
-
     set level(level) {this._level = level;}
-    set base_attack(value) {this._base_attack = value;}
-    set base_defense(value) {this._base_defense = value;}
-    set base_stamina(value) {this._base_stamina = value;}
 
     // Méthode toString pour afficher le Pokémon
     toString() {
