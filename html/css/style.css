@@ -19,12 +19,13 @@ body {
     background-color: #f8f8f8;
 }
 .container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 h1 {
     text-align: center;
+    margin-bottom: 3%;
 }
 table {
     width: 100%;
@@ -97,14 +98,16 @@ img {
 #pagination button {
     padding: 8px 16px;
     margin: 0 5px;
-    border: 1px solid #0075BE;
+    border: none;
     background-color: #FFCC00;
+    color: #333;
     cursor: pointer;
     font-weight: 700;
+    border-radius: 5px;
 }
 
 #pagination button:hover {
-    background-color: #b0e1ff;
+    background-color: #FFDD44;
 }
 
 #pokemonDetails {
@@ -216,12 +219,70 @@ img {
 }
 
 #filters {
-    display: flex;  
-    margin-bottom: 20px;
-    margin-top: 2%;
-    gap: 2%;
+    background-color: #FFCC00;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    column-gap: 50px;
+    row-gap: 20px;
+    align-items: center;
+    margin-bottom: 2%;
 }
 
 #filters label {
-    margin-right: 10px;
+    font-weight: bold;
+}
+
+#filters select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+#filters input[type="text"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 200px;
+}
+.filt{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+@media screen and (max-width: 780px) {
+    #filters{
+        column-gap: 30px;
+    }
+    .filt{
+        gap: 15px;
+    }
+}
+@media screen and (max-width: 480px) {
+    #filters label {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    
+    #filters select {
+        padding: 5px;
+        font-size: 10px;
+    }
+    
+    #filters input[type="text"] {
+        padding: 5px;
+
+        font-size: 10px;
+        width: 100px;
+    }
+    #filters{
+        gap: 15px;
+
+    }
+    
 }
