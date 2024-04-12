@@ -1,5 +1,7 @@
-// La deuxième version de l'affichage dynamique des Pokémons
-// Affichage d'un tableau des Pokémons par page de 25
+/**  La deuxième version de l'affichage dynamique des Pokémons
+* Affichage d'un tableau des Pokémons par page de 25
+* @version 2
+*/
 
 // Attente du chargement complet du document HTML 
 document.addEventListener("DOMContentLoaded", function() {
