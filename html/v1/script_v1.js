@@ -1,5 +1,7 @@
-// La première version de l'affichage dynamique des Pokémons
-// Affichage d'un tableau de tous les Pokémons à partir de la source JSON
+/** La première version de l'affichage dynamique des Pokémons
+* Affichage d'un tableau de tous les Pokémons à partir de la source JSON
+* @version 1
+*/
 
 
 Pokemon.import_pokemon();// Importe les données des Pokémon
