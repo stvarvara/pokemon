@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Liste des Pokémons</h1>
         <div class="montable">
-            <div id="filters">
+            <div id="filters"> <!-- Section des filtres -->
                 <label for="generationFilter">Génération:</label>
                 <select id="generationFilter">
                     <option value="">Tous</option>
@@ -24,7 +24,8 @@
                 <label for="nameFilter">Nom:</label>
                 <input type="text" id="nameFilter" placeholder="Nom du Pokémon">
             </div>
-            <table id="pokemonTable">
+            <h3>Pour trier, cliquez sur le nom de la colonne souhaitée</h3>
+            <table id="pokemonTable"> <!-- Tableau des Pokémons -->
                 <thead>
                     <tr>
                         <th><button id="idHeader">ID</button></th>
@@ -38,23 +39,22 @@
 
                     </tr>
                 </thead>
-                <tbody id="pokemonTableBody">
-                    
+                <tbody id="pokemonTableBody"> <!-- Corps de la table avec contenu dynamique -->
                 </tbody>
             </table>
         </div>
-        <div id="pokemonDetails" class="pokemon-details">
+        <div id="pokemonDetails" class="pokemon-details"> <!-- Détails du Pokémon avec contenu dynamique-->
             <div id="closeButton" class="close-button">X</div>
             <h2>Details du Pokémon</h2>
             <div id="detailsContent"></div>
         </div>
-        <div id="pagination">
+        <div id="pagination"> <!-- Pagination -->
             <button id="prevButton">PRÉC</button>
             <span id="pageInfo">Page <span id="currentPage">1</span> sur <span id="totalPages">1</span></span>
             <button id="nextButton">SUIV</button>
         </div>
     </div>
-
+    <!-- Liens vers les fichiers JavaScript -->
     <script src="../data/charged_moves.js"></script>
     <script src="../data/cp_multiplier.js"></script>
     <script src="../data/fast_moves.js"></script>
