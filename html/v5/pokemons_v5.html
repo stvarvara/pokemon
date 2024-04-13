@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V5 Liste des Pokémons</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Liste des Pokémons</h1>
+        <div class="montable">
+            <div id="filters">
+                <label for="generationFilter">Génération:</label>
+                <select id="generationFilter">
+                    <option value="">Tous</option>
+                </select>
+            
+                <label for="typeFilter">Type:</label>
+                <select id="typeFilter">
+                    <option value="">Tous</option>
+                </select>
+            
+                <label for="nameFilter">Nom:</label>
+                <input type="text" id="nameFilter" placeholder="Nom du Pokémon">
+            </div>
+            <table id="pokemonTable">
+                <thead>
+                    <tr>
+                        <th><button id="idHeader">ID</button></th>
+                        <th><button id="nameHeader">Nom</button></th>
+                        <th><button id="generationHeader">Génération</button></th>
+                        <th><button id="typesHeader">Types</button></th>
+                        <th><button id="staminaHeader">Endurance</button></th>
+                        <th><button id="attackHeader">Attaque</button></th>
+                        <th><button id="defenseHeader">Défense</button></th>
+                        <th>Image</th>
+
+                    </tr>
+                </thead>
+                <tbody id="pokemonTableBody">
+                    
+                </tbody>
+            </table>
+        </div>
+        <div id="pokemonDetails" class="pokemon-details">
+            <div id="closeButton" class="close-button">X</div>
+            <h2>Details du Pokémon</h2>
+            <div id="detailsContent"></div>
+        </div>
+        <div id="pagination">
+            <button id="prevButton">PRÉC</button>
+            <span id="pageInfo">Page <span id="currentPage">1</span> sur <span id="totalPages">1</span></span>
+            <button id="nextButton">SUIV</button>
+        </div>
+    </div>
+
+    <script src="../data/charged_moves.js"></script>
+    <script src="../data/cp_multiplier.js"></script>
+    <script src="../data/fast_moves.js"></script>
+    <script src="../data/generation.js"></script>
+    <script src="../data/pokemon.js"></script>
+    <script src="../data/pokemon_moves.js"></script>
+    <script src="../data/pokemon_type.js"></script>
+    <script src="../data/type_effectiveness.js"></script>
+    <script src="../data/class_attack.js"></script>
+    <script src="../data/class_type.js"></script>
+    <script src="../data/class_pokemon.js"></script>
+    <script src="script_v5.js"></script>
+</body>
+</html>
