@@ -1,17 +1,21 @@
-// La dernière version de l'affichage dynamique des Pokémons
-// Affichage d'un tableau de Pokémons par page de 25
-// Ajout de filtres par génération, type et nom
-// Ajout d'un tri par colonne
+/** La dernière (cinquième) version de l'affichage dynamique des Pokémons
+* Affichage d'un tableau des Pokémons par page de 25
+* Une zone filtrage dans laquelle on pourra filtrer la liste des Pokémons
+* Filtrage sur la Génération, le Type et le Nom
+* Ajout d'un tri par colonne
+* @version 5
+*/
 
-//Un survol de la miniature du Pokémon affiche l’image du Pokémon en grande taille, en mode “popup”
-
+// Attente du chargement complet du document HTML 
 document.addEventListener("DOMContentLoaded", function() {
+    // Récupération des éléments HTML nécessaires
     const tableBody = document.getElementById("pokemonTableBody");
     const closeButton = document.getElementById("closeButton");
     const pokemonDetails = document.getElementById("pokemonDetails");
 
-    Pokemon.import_pokemon();
+    Pokemon.import_pokemon(); // Importation des données des Pokémon
 
+    // Constantes pour la pagination, tri et les filtres
     const pokemonsPerPage = 25;
     const generationFilter = document.getElementById("generationFilter");
     const typeFilter = document.getElementById("typeFilter");
@@ -21,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentSortCriteria = 'id'; // Critère de tri par défaut
     let isAscending = true; // Par défaut, trier par ordre ascendant (alphabetique ou croissant)
 
+     // Fonction pour créer une ligne de Pokémon dans le tableau
     function createPokemonRow(pokemon) {
+        // Création de la ligne
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${pokemon.pokemon_id}</td>
@@ -33,9 +39,11 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>${pokemon.base_defense}</td>
             <td><img src="../webp/thumbnails/${padId(pokemon.pokemon_id)}.webp" alt="${pokemon.pokemon_name}" class="pokemon-thumbnail"></td>
         `;
+        // Ajout d'un événement pour afficher les détails du Pokémon au clic
         row.addEventListener("click", function() {
             showPokemonDetails(pokemon);
         });
+        // Ajout d'un événement pour afficher l'image du Pokémon au survol
         const thumbnail = row.querySelector(".pokemon-thumbnail");
         thumbnail.addEventListener("mouseover", function() {
             showPokemonImage(pokemon);
@@ -46,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         return row;
     }
-
+    // Fonction pour afficher une page de Pokémon
     function renderPokemonPage(page) {
         tableBody.innerHTML = "";
         const startIdx = (page - 1) * pokemonsPerPage;
@@ -58,14 +66,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         document.getElementById("currentPage").innerText = page;
     }
-
+    // Vérification de l'existence des données des Pokémon
     if (!Pokemon.all_pokemons) {
         console.error("Pokemon data not found or not in the correct format.");
         return;
     }
-
+     // Affichage de la première page de Pokémon
     renderPokemonPage(currentPage);
-
+    // Écouteurs d'événements pour la pagination
     document.getElementById("prevButton").addEventListener("click", function() {
         if (currentPage > 1) {
             currentPage--;
@@ -81,11 +89,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("totalPages").innerText = totalPages;
-
+     // Fermeture des détails du Pokémon
     closeButton.addEventListener("click", function() {
         pokemonDetails.style.display = "none";
     });
-
+    
+    // Fonction pour générer les options de filtre
     function generateFilterOptions() {
         const generations = [...new Set(Object.values(Pokemon.all_pokemons).map(pokemon => pokemon.generation))];
         generations.forEach(generation => {
@@ -127,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 && (name ? pokemon.pokemon_name.toLowerCase().includes(name) : true);
         });
     }
-
+    // Fonction pour afficher la page de Pokémon en fonction des filtres
     function renderPokemonPage(page) {
         tableBody.innerHTML = "";
         const filteredPokemons = applyFilters(); 
@@ -197,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
     
-    
+    // Ajout des écouteurs d'événements pour le tri
     addSortEventListener("idHeader", 'id');
     addSortEventListener("nameHeader", 'name');
     addSortEventListener("generationHeader", 'generation');
@@ -205,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
     addSortEventListener("staminaHeader", 'stamina');
     addSortEventListener("attackHeader", 'attack');
     addSortEventListener("defenseHeader", 'defense');
-
+    // Fonction pour trier les Pokémon
     function sortPokemons(sortCriteria) {
         const sortFunction = getSortFunction(sortCriteria);
         const sortedPokemons = Object.values(Pokemon.all_pokemons).sort(sortFunction);
@@ -213,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function() {
         renderPokemonPage(currentPage);
     }
 
-    function getSortFunction(sortCriteria) {
+    function getSortFunction(sortCriteria) {// Fonction pour obtenir la fonction de tri en fonction du critère
         switch (sortCriteria) {
             case 'id':
                 return (a, b) => isAscending ? a.pokemon_id - b.pokemon_id : b.pokemon_id - a.pokemon_id;
@@ -242,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function updatePokemonList(sortedPokemons) {
+    function updatePokemonList(sortedPokemons) { // Fonction pour mettre à jour la liste des Pokémon
         const updatedPokemons = sortedPokemons.reduce((acc, pokemon) => {
             acc[pokemon.pokemon_id] = pokemon;
             return acc;
@@ -250,30 +259,30 @@ document.addEventListener("DOMContentLoaded", function() {
         Pokemon.all_pokemons = updatedPokemons;
     }
     
-    generateFilterOptions();
+    generateFilterOptions();// Génération des options de filtre et tri initial
     sortPokemons(currentSortCriteria); 
 });
 
-function padId(id) { 
+function padId(id) { // Fonction pour ajouter des zéros devant l'ID si nécessaire
     const paddedId = String(id).padStart(3, '0');
     return paddedId;
 } 
 
-function showPokemonImage(pokemon) {
+function showPokemonImage(pokemon) {// Fonction pour afficher l'image du Pokémon
     const popup = document.createElement("div");
     popup.innerHTML = `<img src="../webp/images/${padId(pokemon.pokemon_id)}.webp" alt="${pokemon.pokemon_name}" class="popup-image">`;
     popup.classList.add("popup");
     document.body.appendChild(popup);
 }
 
-function hidePokemonImage() {
+function hidePokemonImage() {// Fonction pour masquer l'image du Pokémon
     const popup = document.querySelector(".popup");
     if (popup) {
         popup.remove();
     }
 }
 
-function showPokemonDetails(pokemon) { // afficher les details
+function showPokemonDetails(pokemon) { // Fonction pour afficher les détails du Pokémon
     const pokemonAttacks = pokemon.moves; // toutes les attaques
     const chargedAttacks = pokemonAttacks.filter(attackName => Attack.all_attacks[attackName].is_charged);// les attaques chargées
     const fastAttacks = pokemonAttacks.filter(attackName => !Attack.all_attacks[attackName].is_charged);// les attaques rapides
